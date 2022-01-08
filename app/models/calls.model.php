@@ -32,7 +32,6 @@ class CallsModel {
         SUM(`calls`.`i_duration_sec`) AS `total_duration_same_continent`
         FROM `calls`
         WHERE `calls`.`st_ip_continent` = `calls`.`st_phone_continent`
-        AND `calls`.`b_muted` = 0
         GROUP BY `calls`.`i_customer_id`
         ) AS `A`
         ON `A`.`customer_id` = `calls`.`i_customer_id`
@@ -42,18 +41,16 @@ class CallsModel {
         COUNT(`calls`.`id`) AS `total_calls`, 
         SUM(`calls`.`i_duration_sec`) AS `total_duration`
         FROM `calls`
-        WHERE `calls`.`b_muted` = 0
         GROUP BY `calls`.`i_customer_id`
         ) AS `B`
         ON `B`.`customer_id` = `calls`.`i_customer_id`
-        WHERE `calls`.`b_muted` = 0
         GROUP BY `customer_id`");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getLastInsertedID() {
-        $stmt = $this->pdo->prepare("SELECT `calls`.`id` FROM `calls` WHERE `calls`.`b_muted` = 0 ORDER BY `calls`.`id` DESC LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT `calls`.`id` FROM `calls` ORDER BY `calls`.`id` DESC LIMIT 1");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if (count($result) == 0) {

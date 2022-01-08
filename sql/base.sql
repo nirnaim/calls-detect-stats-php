@@ -9,8 +9,7 @@ CREATE TABLE `calls` (
   `st_dialed_number` varchar(255) NOT NULL,
   `string_customer_ip` varchar(255) NOT NULL,
   `st_ip_continent` varchar(5) NOT NULL,
-  `st_phone_continent` varchar(5) NOT NULL,
-  `b_muted` tinyint(1) NOT NULL,
+  `st_phone_continent` varchar(5) NOT NULL
   PRIMARY KEY (`id`),
   KEY `i_customer_id` (`i_customer_id`),
   KEY `st_ip_continent` (`st_ip_continent`),
